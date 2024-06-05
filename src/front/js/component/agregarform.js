@@ -87,7 +87,7 @@ export const AgregarForm = (props) => {
             inputPrecio: '',
         },
         validationSchema: Yup.object({
-            inputMarcayModelo: Yup.string().min(8, 'La marca o modelo debe tener mínimo 8 carácteres').required('Campo obligatorio'),
+            inputMarcayModelo: Yup.string().min(6, 'La marca o modelo debe tener mínimo 6 carácteres').required('Campo obligatorio'),
             inputMatricula: Yup.string().matches(/^\S*$/, 'No se permiten espacios en la matrícula').max(7, 'Debe tener 7 caracteres máximo').required('Campo obligatorio'),
             inputMotor: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Campo obligatorio'),
             inputCambio: Yup.string().min(5, 'Este espacio debe contener mínimo 5 carácteres').required('Campo obligatorio'),
