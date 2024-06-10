@@ -7,7 +7,7 @@ HTML5, CSS3, JavaScript, Bootstrap, React.js, Formik, Sweet Alert2, Cloudinary, 
 
 ### How to start?
 1. Check your API live with `$ pipenv run start`
-2. Once you run the pipenv run start command your API will start running live and you need to click in the "ports" tab and then clicking "open browser".
+2. Once you run the pipenv run start command your API will start running live and you need to click in the "port 3001" and then clicking "port visibility" an then Public.
 3. Run the webpack server with `$ npm run start`
 
 
