@@ -7,7 +7,9 @@ import stripe
 import os
 from flask_mail import Mail
 from flask_mail import Message
+import bcrypt 
 
+salt = bcrypt.gensalt()
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -17,6 +19,7 @@ CORS(api)
 def signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt) 
 
     user_exist = User.query.filter_by(email=email).first()
     if email == "" or password == "":
@@ -25,7 +28,7 @@ def signup():
     if user_exist is None:
         new_user = User(
             email=email,
-            password=password,
+            password=hashed_password.decode('utf-8'),
         )
         db.session.add(new_user)
         db.session.commit()
@@ -41,8 +44,10 @@ def login():
     user_exist = User.query.filter_by(email=email).first()
     if email == "" or password == "":
         return jsonify({"msg": "Todos los campos son obligatorios"}), 400
-    if email != user_exist.email or password != user_exist.password:
-        return jsonify({"msg": "El email o password no son correctos"}), 401
+    if email != user_exist.email:
+        return jsonify({"msg": "El email no es correcto"}), 401
+    if not bcrypt.checkpw(password.encode('utf-8'), user_exist.password.encode('utf-8')):
+        return jsonify({"msg": "El password no es correcto"}), 401
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token),200
 
@@ -61,6 +66,8 @@ def add_vehicle():
     url_img1 = request.json.get("url_img1")
     url_img2 = request.json.get("url_img2")
     url_img3 = request.json.get("url_img3")
+    fecha_inicio = request.json.get("fecha_inicio")
+    fecha_fin = request.json.get("fecha_fin")
 
     if (marca_modelo == "" or matricula == "" or motor == "" or tipo_cambio == "" or asientos == "" or precio == "" or url_img1 == "" or url_img2 == "" or url_img3 == ""):
         return jsonify({"msg": "Todos los campos son obligatorios."}), 400
@@ -88,8 +95,9 @@ def add_vehicle():
         user_id= user_id,
         url_img1 = url_img1,
         url_img2 = url_img2,
-        url_img3 = url_img3
-
+        url_img3 = url_img3,
+        fecha_inicio = fecha_inicio,
+        fecha_fin = fecha_fin,
     )
     db.session.add(new_vehicle)
     db.session.commit()
@@ -157,23 +165,34 @@ def update_vehicle(vehicle_id):
         if vehicle_to_update:
             if (data["marca_modelo"] == "" or data["matricula"] == "" or data["motor"] == "" or data["tipo_cambio"] == "" or data["asientos"] == "" or data["precio"] == ""):
                 return jsonify({"msg": "Todos los campos son obligatorios."}), 400
-            
-            # Editar producto en stripe
-            stripe.Price.modify(
-                vehicle_to_update.precio_id_stripe,
-                active = False
-            )
-            update_product_stripe = stripe.Product.modify(
-                vehicle_to_update.producto_id_stripe,
-                name = data["marca_modelo"]
-            )
-            update_price_stripe= stripe.Price.create(
-                product = update_product_stripe["id"],
-                unit_amount = data["precio"] * 100,
-                currency="eur",
-            )
-           
-            vehicle_to_update.marca_modelo=data["marca_modelo"], 
+            if vehicle_to_update.marca_modelo != data["marca_modelo"]:
+                    # Editar producto en stripe
+                update_product_stripe = stripe.Product.modify(
+                    vehicle_to_update.producto_id_stripe,
+                    name = data["marca_modelo"]
+                )
+                vehicle_to_update.producto_id_stripe=update_product_stripe["id"]
+            else:    
+                vehicle_to_update.producto_id_stripe=vehicle_to_update.producto_id_stripe
+            if vehicle_to_update.precio != data["precio"]:
+                    # Editar producto en stripe
+                update_product_stripe = stripe.Product.modify(
+                    vehicle_to_update.producto_id_stripe,
+                    name = data["marca_modelo"]
+                )
+                stripe.Price.modify(
+                    vehicle_to_update.precio_id_stripe,
+                    active = False
+                )
+                update_price_stripe= stripe.Price.create(
+                    product = update_product_stripe["id"],
+                    unit_amount = data["precio"] * 100,
+                    currency="eur",
+                )
+                vehicle_to_update.precio_id_stripe=update_price_stripe["id"]
+            else:    
+                vehicle_to_update.precio_id_stripe=vehicle_to_update.precio_id_stripe
+            vehicle_to_update.marca_modelo=data["marca_modelo"],
             vehicle_to_update.matricula=data["matricula"], 
             vehicle_to_update.motor=data["motor"], 
             vehicle_to_update.tipo_cambio=data["tipo_cambio"],
@@ -182,14 +201,11 @@ def update_vehicle(vehicle_id):
             vehicle_to_update.url_img1=data["url_img1"],
             vehicle_to_update.url_img2=data["url_img2"],
             vehicle_to_update.url_img3=data["url_img3"],
-            vehicle_to_update.precio_id_stripe=update_price_stripe["id"]
             db.session.commit()
             return ({"msg": "El vehiculo fue editado correctamente"}), 200
         else:
             return ({"msg": "No puedes editar este vehículo, ya que no es un vehiculo propio"}), 400
 
-
-        
 @api.route("/favorite/vehicle/<int:vehicle_id>", methods=["POST"])
 @jwt_required()
 def create_favorite_vehicle(vehicle_id):

@@ -6,7 +6,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			myVehicles: [],
 			details: {},
-			checkout: {}
+			checkout: {},
+			diasTotales: null,
+			fechaInicio: null,
+			fechaFin: null
 		},
 		actions: {
 			getMessage: async () => {
@@ -76,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			addVehicle: async (marca_modelo, matricula, motor, tipo_cambio, asientos, precio, url_img1, url_img2, url_img3) => {
+			addVehicle: async (marca_modelo, matricula, motor, tipo_cambio, asientos, precio, url_img1, url_img2, url_img3, fecha_inicio, fecha_fin) => {
 				const token = localStorage.getItem("token")
                 try {
 			 		const response = await fetch(`${process.env.BACKEND_URL}/api/vehicle`, {
@@ -94,7 +97,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			 					precio: parseInt(precio),
 								url_img1: url_img1,
 								url_img2: url_img2,
-								url_img3: url_img3
+								url_img3: url_img3,
+								fecha_inicio: fecha_inicio,
+								fecha_fin: fecha_fin,
 			 	 		})
                  	});
 					if (response.status === 200) {
@@ -320,7 +325,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     });
                     if (response.status === 200) {
-                        const data = await response.json();
                         return true; 
                     } else {
                         return false; 
@@ -345,6 +349,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     return false; 
                 }
+			},
+			filterdays: (startDate, endDate) => {
+				const fechaInicio = startDate.getTime() ;
+				const fechaFin = endDate.getTime();
+				const diff = fechaFin - fechaInicio;
+				const diasTotales =  diff / (1000 * 60 * 60 * 24);
+				setStore({
+					diasTotales: diasTotales,
+					fechaInicio: startDate,
+					fechaFin: endDate
+				})
 			},
 		}
 	};

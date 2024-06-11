@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { CardVehicles } from "../component/cardvehicles";
 import { FiltroAsientos } from "../component/filtroasientos";
 import { FiltroPrecio } from "../component/filtroprecio";
+import { FiltroFecha } from "../component/filtrofecha";
 import { useNavigate } from "react-router-dom";
 import swal from 'sweetalert';
 import { Chat } from "../component/chat";
@@ -28,6 +29,20 @@ export const Home = () => {
 		return vehicle.asientos >= filtroAsientos;
 	}
 
+	const filtrarPorFechas = (vehicle) => {
+		const fechaInicio = store.fechaInicio;
+		const fechaFin = store.fechaFin;
+		const vehicle_fechaInicio = new Date(vehicle.fecha_inicio).getTime();
+		const vehicle_fechaFin = new Date(vehicle.fecha_fin).getTime();
+		if (fechaInicio === null || fechaFin === null) {
+			return true;
+		}
+		if ((fechaInicio.getTime() + 7200000) >= vehicle_fechaInicio && fechaFin.getTime() <= vehicle_fechaFin) {
+			return true;
+		}
+		return false;
+	}
+
 	useEffect(() => {
 		actions.getVehicles();
 	}, []);
@@ -51,14 +66,19 @@ export const Home = () => {
 			<div className="mt-5 d-flex justify-content-center text-center fs-4 text-dark-80">
 				<p><strong>¿Buscas o rentas tu coche? Estás en el lugar adecuado</strong></p>
 			</div>
-			<div className="d-flex gap-2 justify-content-center text-center my-3 fs-4 text-dark-80">
-				<FiltroAsientos setFiltroAsientos={setFiltroAsientos} />	
-				<FiltroPrecio setFiltroPrecio={setFiltroPrecio} />
+			<div className="d-flex gap-4 justify-content-center">
+				<div className="d-flex gap-3 text-center my-3 fs-4 text-dark-80">
+					<FiltroFecha />
+				</div>
+				<div className="d-flex gap-3 text-center my-3 fs-4 text-dark-80">
+					<FiltroAsientos setFiltroAsientos={setFiltroAsientos} />	
+					<FiltroPrecio setFiltroPrecio={setFiltroPrecio} />
+				</div>
 			</div>
 			<div className="footer-view text-danger vehicles mb-5 mt-2 justify-content-center bg-light">
 				<div className="container">
 					<div className="row text-dark d-flex justify-content-center gap-4">
-						{store.vehicles.filter(filtrarPorAsientos).filter(filtrarPorPrecio).map((vehicle) => {
+						{store.vehicles.filter(filtrarPorFechas).filter(filtrarPorAsientos).filter(filtrarPorPrecio).map((vehicle) => {
 							return (
 								<CardVehicles vehicle={vehicle} key={vehicle.id} />
 							)

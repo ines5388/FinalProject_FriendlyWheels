@@ -5,7 +5,7 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True) 
     email = db.Column(db.String(250), unique=True, nullable=False)
-    password = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     favorites_vehicles = db.relationship('FavoriteVehicle', backref='user', lazy=True)
     vehicle = db.relationship('Vehicle', backref='user', lazy=True)
     
@@ -28,13 +28,15 @@ class Vehicle(db.Model):
     tipo_cambio = db.Column(db.String(50), nullable=False)
     asientos = db.Column(db.Integer, nullable=False)
     precio = db.Column(db.Integer, nullable=False)   
-    precio_id_stripe = db.Column(db.String(50), nullable=False)
-    producto_id_stripe = db.Column(db.String(50), nullable=False)   
-    favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)
+    fecha_inicio = db.Column(db.Date, nullable=False)
+    fecha_fin = db.Column(db.Date, nullable=False)
     url_img1 = db.Column(db.String(300), nullable=True)
     url_img2 = db.Column(db.String(300), nullable=True)
     url_img3 = db.Column(db.String(300), nullable=True)
-
+    precio_id_stripe = db.Column(db.String(50), nullable=False)
+    producto_id_stripe = db.Column(db.String(50), nullable=False)   
+    favorites_vehicles = db.relationship('FavoriteVehicle', backref='vehicle', lazy=True)
+    
     def __repr__(self):
         return f'<Vehicle {self.id}>'
 
@@ -47,12 +49,16 @@ class Vehicle(db.Model):
             "tipo_cambio": self.tipo_cambio,
             "asientos": self.asientos,
             "precio": self.precio,
-            "user_id": self.user_id,
-            "precio_id_stripe": self.precio_id_stripe,
-            "producto_id_stripe": self.producto_id_stripe,
+            "fecha_inicio": self.fecha_inicio,
+            "fecha_fin": self.fecha_fin,
             "url_img1" : self.url_img1,
             "url_img2" : self.url_img2,
-            "url_img3" : self.url_img3
+            "url_img3" : self.url_img3,
+            "user_id": self.user_id,
+            "precio_id_stripe": self.precio_id_stripe,
+            "producto_id_stripe": self.producto_id_stripe
+            
+            
         }
 
 class FavoriteVehicle(db.Model):

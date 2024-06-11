@@ -9,14 +9,18 @@ import Dropzone from "react-dropzone";
 import axios from "axios";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 export const AgregarForm = (props) => {
 
     const { actions } = useContext(Context);
     const [image, setImage] = useState({ array: [] });
     const [loading, setLoading] = useState("");
+    const [dateRange, setDateRange] = useState([null, null]);
+    const [startDate, endDate] = dateRange; 
     
-
     const handleDrop = (files) => {
         const uploaders = files.map((file) => {
             const formData = new FormData();
@@ -61,7 +65,7 @@ export const AgregarForm = (props) => {
                     : image.array.map((item, index) => (
                         <>
                             <img key={index} alt="uploaded_image"
-                                style={{ "max-width": "50%" }}
+                                style={{ "maxWidth": "50%" }}
                                 src={item}
                             />
                             <div onClick={() => {
@@ -96,12 +100,18 @@ export const AgregarForm = (props) => {
         }),
         onSubmit: values => {
             async function handleSubmit() {   
-                       if (image.array.length !== 3) {
-                       swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
-                       return;
+                if (image.array.length !== 3) {
+                swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
+                return;
+               }
+               if (startDate === null && endDate === null) {
+                swal("Selecciona las fecha de Inicio-Fin", "Por favor inténtelo de nuevo", "error");
+                return;
                }
                const [url_img1, url_img2, url_img3] = image.array;
-               let respuesta = await actions.addVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, url_img1, url_img2, url_img3);
+               const fechaInicio = moment(startDate).format('YYYY/MM/DD');
+               const fechaFin = moment(endDate).format('YYYY/MM/DD');
+               let respuesta = await actions.addVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, url_img1, url_img2, url_img3, fechaInicio, fechaFin);
                    if (respuesta === "success") {
                        swal("Vehículo añadido correctamente", "", "success")
                        navigate("/");
@@ -181,6 +191,27 @@ export const AgregarForm = (props) => {
                         {formik.touched.inputPrecio && formik.errors.inputPrecio ? (
                         <div className="text-danger">{formik.errors.inputPrecio}</div>
                     ) : null}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-6 mb-3">
+                    <h4 className="subtitulos">Días en alquiler</h4>
+                        <DatePicker 
+                            className="form-control mb-3"
+                            placeholderText="Inicio - Fin"
+                            dateFormat="dd/MM/YYYY"
+                            todayButton="Friendly Wheels" 
+                            selectsRange={true}
+                            startDate={startDate}
+                            endDate={endDate}
+                            onChange={(update) => {
+                                setDateRange(update);
+                            }}
+                            minDate={new Date()}
+                            excludeDates={[
+                                { date: new Date(), message: "El día de hoy no se puede incluir" }
+                            ]}
+                        />
                     </div>
                 </div>
                 <div>

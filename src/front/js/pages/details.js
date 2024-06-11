@@ -1,18 +1,22 @@
 import React, { useEffect, useContext} from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
-import { ModalAlquilar } from "../component/modalalquilar.js";
 import "../../styles/index.css";
 
 export const Details = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
 
+    const handlePayment = () => {
+        if(store.diasTotales === null) {
+            swal("Debe seleccionar la cantidad de días antes de realizar el alquiler", "", "error")
+        }
+        actions.totalpayment(store.details.vehicle_id, store.details.marca_modelo, store.details.precio, store.diasTotales, store.details.precio_id_stripe,store.details.url_img1);
+	};
+
     useEffect(() => {
         actions.getDetails(params.id);
     }, []);
-
-    
 
     return (
         <div className="d-flex justify-content-evenly flex-wrap gap-4 footer-view mt-4">
@@ -69,16 +73,17 @@ export const Details = () => {
                                     <strong>PRECIO POR DIA:</strong> {store.details.precio} €
                                 </h5>
                             </div>
+                            <div className="d-flex mb-4">
+                                <h5>
+                                    <strong>CANTIDAD DE DIAS:</strong> {store.diasTotales ? store.diasTotales : 0}
+                                </h5>
+                            </div>
                         </div>
-                        <div className="d-grid gap-2 col-6 mx-auto d-flex my-4">
-                            <ModalAlquilar
-                                vehicle_id={store.details.id}
-                                marca_modelo={store.details.marca_modelo}
-                                precio={store.details.precio}
-                                precio_id_stripe={store.details.precio_id_stripe}
-                                url_img1={store.details.url_img1}
-                            />
-                        </div>
+                        <Link to={store.diasTotales === null ? '/' : '/payment'} >
+                            <button onClick={handlePayment} type="button" className="botonAlquilar btn-success text-center btn-lg border-2 mt-4 fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Alquilar
+                            </button>
+                        </Link>
                     </div>
                 </>
             : null }

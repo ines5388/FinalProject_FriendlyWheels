@@ -28,7 +28,7 @@ app.config["JWT_SECRET_KEY"] = "super-secret"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
 jwt = JWTManager(app)
 
-stripe.api_key = 'sk_test_51PH6D8By1Y4Nz1OnrvtuZxon5ohOCTrXSLYKsb0A3Qbt0UFU2vJ01L7QCCNK9ieAJ9K7xwkjKB5iV8iRGPVPpKEJ00CbDbviRr'
+stripe.api_key = 'sk_test_51PDP3eHB7oLooSPWKFmhGciWVBs9XEM60OrXabQxD36KbSX9RFLnhrJvC4p49ESOzM7dMkuIPB8eYRuRkcWJIjkW00RCHHbhMG'
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587  
