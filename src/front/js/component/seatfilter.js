@@ -1,6 +1,6 @@
 import React from "react";
 
-export const FiltroAsientos = (props) => {
+export const SeatFilter = (props) => {
     
     return (
         <div className="dropdown">

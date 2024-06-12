@@ -124,7 +124,7 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-recogida-entrega',
                         options: [
-                            {value:"nosotros", label: "Nosotros 📍", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
+                            {value:"nosotros", label: "Nosotros 📍", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/aboutus`)},
                         ],
                     },
                     {
@@ -231,7 +231,7 @@ export const Chat = () => {
                     {
                         id: 'respuesta-ayuda-entrego-mi-coche',
                         options: [
-                            {value:"nosotros", label: "Nosotros 📍", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/sobrenosotros`)},
+                            {value:"nosotros", label: "Nosotros 📍", trigger: () => handleLinkClick(`${process.env.FRONT_URL}/aboutus`)},
                         ],
                     },
                     {

@@ -32,7 +32,7 @@ export const Navbar = () => {
 			<div className="container-fluid mx-2">
 				<div className="d-flex gap-3">
 					<Link to="/">
-						<img className="logo" src={logoImageUrl} />
+						<img className="navbar-car-logo" src={logoImageUrl} />
 					</Link>
 					<h2 className="navbar-text ms-2 me-5 mt-3 mb-2 display-4 text-center text-white fs-2"><strong>Friendly Wheels</strong></h2>
 				</div>
@@ -46,8 +46,8 @@ export const Navbar = () => {
 							aria-controls="offcanvasNavbar"
 							aria-label="Toggle navigation"
 						>
-							<div><span className=" navbarbutton navbar-toggler-icon me-2"></span></div>
-							<div className="usericon"><i className="fas fa-user-circle"></i></div>
+							<div><span className="navbar-menu-button navbar-toggler-icon me-2"></span></div>
+							<div className="user-icon-menu"><i className="fas fa-user-circle"></i></div>
 						</button>
 						<div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 							<div className="offcanvas-header my-0">
@@ -57,17 +57,17 @@ export const Navbar = () => {
 							<div className="offcanvas-body">
 								<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
 									<li className="nav-item mb-3" data-bs-toggle="offcanvas">
-										<Link to="/favoritos" className="text-decoration-none">
+										<Link to="/myfavourites" className="text-decoration-none">
 											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-heart pe-3"></i>Mis Favoritos</div>
 										</Link>
 									</li>
 									<li className="nav-item dropdown mb-3" data-bs-toggle="offcanvas">
-										<Link to="/miscoches" className="text-decoration-none">
+										<Link to="/myvehicles" className="text-decoration-none">
 											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-car pe-3"></i>Mis Coches</div>
 										</Link>
 									</li>
 									<li className="nav-item mb-4" data-bs-toggle="offcanvas">
-										<Link to="/agregarvehiculo" className="text-decoration-none">
+										<Link to="/addvehicle" className="text-decoration-none">
 											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-plus-circle pe-3"></i>Pon tu coche en Friendly Wheels</div>
 										</Link>
 									</li>
@@ -90,10 +90,10 @@ export const Navbar = () => {
 								aria-controls="offcanvasNavbar"
 								aria-label="Toggle navigation"
 							>
-								<div><span className=" navbarbutton navbar-toggler-icon me-2"></span></div>
-								<div className="usericon"><i className="fas fa-user-circle"></i></div>
+								<div><span className="navbar-menu-button navbar-toggler-icon me-2"></span></div>
+								<div className="user-icon-menu"><i className="fas fa-user-circle"></i></div>
 							</button>
-							<div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+							<div className="offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 								<div className="offcanvas-header">
 									<h4 className="offcanvas-title" id="offcanvasNavbarLabel"><strong>Menú</strong></h4>
 									<button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>

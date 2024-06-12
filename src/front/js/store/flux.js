@@ -7,9 +7,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			myVehicles: [],
 			details: {},
 			checkout: {},
-			diasTotales: null,
-			fechaInicio: null,
-			fechaFin: null
+			totalDays: null,
+			startDay: null,
+			endDay: null
 		},
 		actions: {
 			getMessage: async () => {
@@ -351,14 +351,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
 			},
 			filterdays: (startDate, endDate) => {
-				const fechaInicio = startDate.getTime() ;
-				const fechaFin = endDate.getTime();
-				const diff = fechaFin - fechaInicio;
-				const diasTotales =  diff / (1000 * 60 * 60 * 24);
+				const startDay = startDate.getTime() ;
+				const endDay = endDate.getTime();
+				const diff = endDay - startDay;
+				const totalDays =  diff / (1000 * 60 * 60 * 24);
 				setStore({
-					diasTotales: diasTotales,
-					fechaInicio: startDate,
-					fechaFin: endDate
+					totalDays: totalDays,
+					startDay: startDate,
+					endDay: endDate
 				})
 			},
 		}

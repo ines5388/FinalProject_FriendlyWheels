@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { ModalRecuperarContraseña } from "./modalrecuperarcontraseña.js";
+import { PasswordRecoveryForm } from "./passwordrecoveryform.js";
 import swal from 'sweetalert';
-import "../../styles/index.css";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import "../../styles/index.css";
 
 export const LoginForm = () => {
     const { actions } = useContext(Context)
@@ -36,7 +36,7 @@ export const LoginForm = () => {
     });
 
     return (
-        <div className="contactForm">
+        <div className="login-signup-form">
             <h1 className="title text-center pb-4">Iniciar sesión</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
@@ -61,7 +61,7 @@ export const LoginForm = () => {
                     <button type="submit" className="login btn-lg btn-dark mt-3">Iniciar sesión</button>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <ModalRecuperarContraseña />
+                    <PasswordRecoveryForm />
                 </div>
             </form>
         </div>

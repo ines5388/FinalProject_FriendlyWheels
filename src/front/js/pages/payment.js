@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductDisplay } from "../component/productodisplay.js";
+import { ProductDisplay } from "../component/productdisplay.js";
 
 export function Payment() {
   return (

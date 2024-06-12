@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import swal from 'sweetalert';
 import { useNavigate } from "react-router-dom";
-import "../../styles/index.css";
+import swal from 'sweetalert';
 import imgFolder from "../../img/folder.png";
 import { Container } from "reactstrap";
 import Dropzone from "react-dropzone";
@@ -10,17 +9,18 @@ import axios from "axios";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import "../../styles/index.css";
+import "react-datepicker/dist/react-datepicker.css";
 
-export const AgregarForm = (props) => {
+export const AddVehicleForm = () => {
 
     const { actions } = useContext(Context);
     const [image, setImage] = useState({ array: [] });
     const [loading, setLoading] = useState("");
     const [dateRange, setDateRange] = useState([null, null]);
-    const [startDate, endDate] = dateRange; 
-    
+    const [startDate, endDate] = dateRange;
+
     const handleDrop = (files) => {
         const uploaders = files.map((file) => {
             const formData = new FormData();
@@ -99,37 +99,37 @@ export const AgregarForm = (props) => {
             inputPrecio: Yup.number().min(1, 'El precio de su alquiler debe ser mayor a 0').required('Campo obligatorio'),
         }),
         onSubmit: values => {
-            async function handleSubmit() {   
+            async function handleSubmit() {
                 if (image.array.length !== 3) {
-                swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
-                return;
-               }
-               if (startDate === null && endDate === null) {
-                swal("Selecciona las fecha de Inicio-Fin", "Por favor inténtelo de nuevo", "error");
-                return;
-               }
-               const [url_img1, url_img2, url_img3] = image.array;
-               const fechaInicio = moment(startDate).format('YYYY/MM/DD');
-               const fechaFin = moment(endDate).format('YYYY/MM/DD');
-               let respuesta = await actions.addVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, url_img1, url_img2, url_img3, fechaInicio, fechaFin);
-                   if (respuesta === "success") {
-                       swal("Vehículo añadido correctamente", "", "success")
-                       navigate("/");
-                   } else if (respuesta === "plate_exist") {
-                       swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
-                   }
-               };
-               handleSubmit();
+                    swal("Debe subir tres imágenes del vehículo", "Por favor inténtelo de nuevo", "error");
+                    return;
+                }
+                if (startDate === null && endDate === null) {
+                    swal("Selecciona las fecha de Inicio-Fin", "Por favor inténtelo de nuevo", "error");
+                    return;
+                }
+                const [url_img1, url_img2, url_img3] = image.array;
+                const fechaInicio = moment(startDate).format('YYYY/MM/DD');
+                const fechaFin = moment(endDate).format('YYYY/MM/DD');
+                let respuesta = await actions.addVehicle(values.inputMarcayModelo, values.inputMatricula.replaceAll(" ", "").toUpperCase(), values.inputMotor, values.inputCambio, values.inputAsientos, values.inputPrecio, url_img1, url_img2, url_img3, fechaInicio, fechaFin);
+                if (respuesta === "success") {
+                    swal("Vehículo añadido correctamente", "", "success")
+                    navigate("/");
+                } else if (respuesta === "plate_exist") {
+                    swal("El vehículo con esta matrícula ya ha sido añadido", "Por favor inténtelo de nuevo", "error")
+                }
+            };
+            handleSubmit();
         },
-      });
+    });
 
     return (
-        <div className="container lg-5">
-            <h1 className="border-bottom pb-4 text-success text-center"><strong>PONGA SU VEHÍCULO EN ALQUILER</strong></h1>
+        <div className="lg-5">
+            <h1 className="mx-2 pb-4 text-success text-center"><strong>PONGA SU VEHÍCULO EN ALQUILER</strong></h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
-                        <h4 className="subtitulos">Marca y modelo del vehículo</h4>
+                        <h4 className="add-edit-form-subtitles">Marca y modelo del vehículo</h4>
                         <input type="text" className="form-control mb-3" id="inputMarcayModelo" placeholder="Ingresa la marca y modelo del vehículo" name="inputMarcayModelo" onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.inputMarcayModelo}
@@ -139,68 +139,68 @@ export const AgregarForm = (props) => {
                         ) : null}
                     </div>
                     <div className="col-lg-6 mb-3">
-                        <h4 className="subtitulos">Matrícula de vehículo</h4>
+                        <h4 className="add-edit-form-subtitles">Matrícula de vehículo</h4>
                         <input type="text" className="form-control mb-3" id="inputMatricula" placeholder="Ingresa la matrícula del vehículo, ej.:1234ABC" name="inputMatricula" onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.inputMatricula}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.inputMatricula}
                         />
                         {formik.touched.inputMatricula && formik.errors.inputMatricula ? (
-                        <div className="text-danger">{formik.errors.inputMatricula}</div>
-                    ) : null}
+                            <div className="text-danger">{formik.errors.inputMatricula}</div>
+                        ) : null}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
-                        <h4 className="subtitulos">Tipo de motor</h4>
+                        <h4 className="add-edit-form-subtitles">Tipo de motor</h4>
                         <input type="text" className="form-control mb-3" id="inputMotor" placeholder="Ingresa el tipo de motor del vehículo" name="inputMotor" onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.inputMotor}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.inputMotor}
                         />
                         {formik.touched.inputMotor && formik.errors.inputMotor ? (
-                        <div className="text-danger">{formik.errors.inputMotor}</div>
-                    ) : null}
+                            <div className="text-danger">{formik.errors.inputMotor}</div>
+                        ) : null}
                     </div>
                     <div className="col-lg-6 mb-3">
-                        <h4 className="subtitulos">Tipo de cambio</h4>
+                        <h4 className="add-edit-form-subtitles">Tipo de cambio</h4>
                         <input type="text" className="form-control mb-3" id="inputCambio" placeholder="Ingresa el tipo de cambio del vehículo" name="inputCambio" onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.inputCambio}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.inputCambio}
                         />
                         {formik.touched.inputCambio && formik.errors.inputCambio ? (
-                        <div className="text-danger">{formik.errors.inputCambio}</div>
-                    ) : null}
+                            <div className="text-danger">{formik.errors.inputCambio}</div>
+                        ) : null}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
-                        <h4 className="subtitulos">Número de asientos</h4>
+                        <h4 className="add-edit-form-subtitles">Número de asientos</h4>
                         <input type="number" className="form-control mb-3" id="inputAsientos" placeholder="Ingresa el número de asientos" name="inputAsientos" onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.inputAsientos}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.inputAsientos}
                         />
                         {formik.touched.inputAsientos && formik.errors.inputAsientos ? (
-                        <div className="text-danger">{formik.errors.inputAsientos}</div>
-                    ) : null}
+                            <div className="text-danger">{formik.errors.inputAsientos}</div>
+                        ) : null}
                     </div>
                     <div className="col-lg-6 mb-3">
-                        <h4 className="subtitulos">Precio por día</h4>
+                        <h4 className="add-edit-form-subtitles">Precio por día</h4>
                         <input type="number" className="form-control mb-3" id="inputPrecio" placeholder="Ingresa precio por día" name="inputPrecio" onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.inputPrecio}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.inputPrecio}
                         />
                         {formik.touched.inputPrecio && formik.errors.inputPrecio ? (
-                        <div className="text-danger">{formik.errors.inputPrecio}</div>
-                    ) : null}
+                            <div className="text-danger">{formik.errors.inputPrecio}</div>
+                        ) : null}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg-6 mb-3">
-                    <h4 className="subtitulos">Días en alquiler</h4>
-                        <DatePicker 
+                        <h4 className="add-edit-form-subtitles">Días en alquiler</h4>
+                        <DatePicker
                             className="form-control mb-3"
                             placeholderText="Inicio - Fin"
                             dateFormat="dd/MM/YYYY"
-                            todayButton="Friendly Wheels" 
+                            todayButton="Friendly Wheels"
                             selectsRange={true}
                             startDate={startDate}
                             endDate={endDate}
@@ -216,7 +216,7 @@ export const AgregarForm = (props) => {
                 </div>
                 <div>
                     <Container>
-                        <h4 className="upload-img-text">Seleccione tres imágenes de su vehículo</h4>
+                        <h4 className="add-edit-form-subtitles">Seleccione tres imágenes de su vehículo</h4>
                         <Dropzone className="dropzone"
                             onDrop={handleDrop}
                             onChange={(e) => setImage(e.target.value)}
@@ -224,7 +224,7 @@ export const AgregarForm = (props) => {
                             {({ getRootProps, getInputProps }) => (
                                 <section>
                                     <div {...getRootProps({ className: "dropzone" })}>
-                                        <img className="logo" src={imgFolder} />
+                                        <img className="dropzone-logo" src={imgFolder} />
                                         <p>Seleccione o arrastre aquí sus imágenes </p>
                                     </div>
                                 </section>
@@ -233,7 +233,7 @@ export const AgregarForm = (props) => {
                         {imagePreview()}
                     </Container>
                 </div>
-                <div className="d-flex justify-content-center" id="btnAgregarForm">
+                <div className="d-flex justify-content-center" id="add-vehicle-button-form">
                     <button type="submit" className="btn-success btn-lg border-2 mb-5 fs-4 justify-content-center">Añadir vehículo</button>
                 </div>
             </form>

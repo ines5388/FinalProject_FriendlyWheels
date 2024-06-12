@@ -20,10 +20,10 @@ export const CardVehicles = ({ vehicle }) => {
     }, [store.favorites]);
 
     return (
-        <div className="vehiculo card col-md-4" style={{ width: "22rem", height: "27rem" }}>
+        <div className="card-vehicle card col-md-4" style={{ width: "22rem", height: "27rem" }}>
             <div>
                 <a className="cardvehicles" href="#">
-                    <img className="imagen1" src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
+                    <img className="card-vehicle-imagen1" src={vehicle.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
                 </a>
             </div>
             <div className="card-body ms-2 p-2">
@@ -33,7 +33,7 @@ export const CardVehicles = ({ vehicle }) => {
             </div>
                 {token ?
                     <div className="d-flex justify-content-between mx-3">
-                        <Link to={`/details/${vehicle.id}`}>
+                        <Link to={`/detailvehicle/${vehicle.id}`}>
                             <button className="btn-success btn-lg border-2 rounded-4 mb-3"><strong>Más Detalles</strong></button>
                         </Link>
                         <div className="me-2">

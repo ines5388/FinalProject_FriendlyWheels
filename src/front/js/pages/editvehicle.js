@@ -1,9 +1,9 @@
 import React, {useEffect, useContext} from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext.js";
-import { EditarForm } from "../component/editarform.js";
+import { EditVehicleForm } from "../component/editvehicleform.js";
 
-export const EditarVehiculo = () => {
+export const EditVehicle = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
     const showForm = params.id == store.details.id;
@@ -13,9 +13,9 @@ export const EditarVehiculo = () => {
     }, []);
 
     return (
-        <div className="footer-view agregar-vehiculo">
+        <div className="footer-view add-edit-vehicle-form">
             {showForm
-                ? <EditarForm {...store.details} /> 
+                ? <EditVehicleForm {...store.details} /> 
                 : null
             }
         </div>

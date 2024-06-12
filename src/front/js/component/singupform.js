@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import swal from 'sweetalert';
-import "../../styles/index.css";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import "../../styles/index.css";
 
 export const SignupForm = () => {
     const { actions } = useContext(Context);
@@ -34,7 +34,7 @@ export const SignupForm = () => {
     });
 
     return (
-        <div className="contactForm">
+        <div className="login-signup-form">
             <h1 className="title text-center pb-4">Crear cuenta</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">

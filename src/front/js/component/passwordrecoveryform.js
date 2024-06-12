@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ModalRecuperarContraseña = () => {
+export const PasswordRecoveryForm = () => {
 
     const recuperarContraseña = () => {
         swal("En breve recibira un email de recuperación de contraseña", "", "success")

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import { CardVehicles } from "../component/cardvehicles";
-import { FiltroAsientos } from "../component/filtroasientos";
-import { FiltroPrecio } from "../component/filtroprecio";
-import { FiltroFecha } from "../component/filtrofecha";
 import { useNavigate } from "react-router-dom";
+import { CardVehicles } from "../component/cardvehicles";
+import { SeatFilter } from "../component/seatfilter";
+import { PriceFilter } from "../component/priceFilter";
+import { DaysFilter } from "../component/daysfilter";
 import swal from 'sweetalert';
 import { Chat } from "../component/chat";
 import "../../styles/index.css";
@@ -30,16 +30,18 @@ export const Home = () => {
 	}
 
 	const filtrarPorFechas = (vehicle) => {
-		const fechaInicio = store.fechaInicio;
-		const fechaFin = store.fechaFin;
+		const fechaInicio = store.startDay;
+		const fechaFin = store.endDay;
 		const vehicle_fechaInicio = new Date(vehicle.fecha_inicio).getTime();
 		const vehicle_fechaFin = new Date(vehicle.fecha_fin).getTime();
+
 		if (fechaInicio === null || fechaFin === null) {
 			return true;
 		}
 		if ((fechaInicio.getTime() + 7200000) >= vehicle_fechaInicio && fechaFin.getTime() <= vehicle_fechaFin) {
 			return true;
 		}
+		swal("No hay coches disponibles en su selección", "Por favor intentelo de nuevo", "error");
 		return false;
 	}
 
@@ -66,17 +68,15 @@ export const Home = () => {
 			<div className="mt-5 d-flex justify-content-center text-center fs-4 text-dark-80">
 				<p><strong>¿Buscas o rentas tu coche? Estás en el lugar adecuado</strong></p>
 			</div>
-			<div className="d-flex gap-4 justify-content-center">
-				<div className="d-flex gap-3 text-center my-3 fs-4 text-dark-80">
-					<FiltroFecha />
-				</div>
-				<div className="d-flex gap-3 text-center my-3 fs-4 text-dark-80">
-					<FiltroAsientos setFiltroAsientos={setFiltroAsientos} />	
-					<FiltroPrecio setFiltroPrecio={setFiltroPrecio} />
-				</div>
+			<div className="d-flex gap-3 justify-content-center my-3 fs-4 text-dark-80">
+				<DaysFilter />
+			</div>
+			<div className="d-flex gap-3 justify-content-center my-3 fs-4 text-dark-80">
+				<SeatFilter setFiltroAsientos={setFiltroAsientos} />	
+				<PriceFilter setFiltroPrecio={setFiltroPrecio} />
 			</div>
 			<div className="footer-view text-danger vehicles mb-5 mt-2 justify-content-center bg-light">
-				<div className="container">
+				<div>
 					<div className="row text-dark d-flex justify-content-center gap-4">
 						{store.vehicles.filter(filtrarPorFechas).filter(filtrarPorAsientos).filter(filtrarPorPrecio).map((vehicle) => {
 							return (

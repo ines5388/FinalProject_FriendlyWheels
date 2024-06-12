@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-export const Favoritos = () => {
+export const MyFavourites = () => {
     const { store, actions } = useContext(Context);
 
     async function eliminarFavorito(vehicle_id) {
@@ -19,13 +19,13 @@ export const Favoritos = () => {
     return (
         <>
             <div className="footer-view vehicles mb-5 mt-3 justify-content-center bg-light">
-                <div className="container">
+                <div className="container myfavourites-myvehicles">
                     {store.favorites.length === 0
                         ? (
                             <>
                                 <h2 className="mt-3 mb-2 text-success"><strong>MIS FAVORITOS</strong></h2>
                                 <div className="fs-4 mt-4 mb-3"><strong>Crea tu primera lista de favoritos</strong></div>
-                                <div className="texto-favoritos">Pulsa en el icono del corazón para guardar los coches y las experiencias <br></br> que más te gusten en Favoritos mientras buscas.</div>
+                                <div>Pulsa en el icono del corazón para guardar los coches y las experiencias <br></br> que más te gusten en Favoritos mientras buscas.</div>
                             </>
                         )
                         : (
@@ -33,9 +33,9 @@ export const Favoritos = () => {
                                 <h2 className="mt-3 mb-4 text-success text-center"><strong>MIS FAVORITOS</strong></h2>
                                 <div className="row text-dark d-flex gap-4 justify-content-center">
                                     {store.favorites.map((vehicle) => (
-                                        <div key={vehicle.id} className="vehiculo card col-md-4" style={{ width: "22rem", height: "27rem" }}>
+                                        <div key={vehicle.id} className="card-vehicle card col-md-4" style={{ width: "22rem", height: "27rem" }}>
                                             <Link to={`/details/${vehicle.id}`} className="text-decoration-none text-black">
-                                                    <img className="imagen1" src={vehicle.url_img1} style={{ width: "100%", objectFit: "cover", height: "12rem" }} />
+                                                    <img className="card-vehicle-imagen1" src={vehicle.url_img1} style={{ width: "100%", objectFit: "cover", height: "12rem" }} />
                                                 <div className="card-body ms-2 p-2">
                                                         <h3 className="card-title mb-3 text-success mt-2"><strong>{vehicle.marca_modelo.toUpperCase()}</strong></h3>
                                                         <p className="card-text mb-1"><strong>Tipo de motor:</strong> {vehicle.motor}</p>

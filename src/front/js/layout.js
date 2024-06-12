@@ -7,13 +7,13 @@ import { Footer } from "./component/footer";
 import { Signup } from "./pages/signup";
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
-import { AgregarVehiculo } from "./pages/agregarvehiculo";
-import { EditarVehiculo } from "./pages/editarvehiculo";
-import { MisCoches } from "./pages/miscoches";
-import { Details } from "./pages/details";
+import { AddVehicle } from "./pages/addvehicle";
+import { EditVehicle } from "./pages/editvehicle";
+import { MyVehicles } from "./pages/myvehicles";
+import { DetailVehicle } from "./pages/detailvehicle";
 import { Payment } from "./pages/payment";
-import { SobreNosotros } from "./pages/sobrenosotros";
-import { Favoritos } from "./pages/favoritos";
+import { AboutUs } from "./pages/aboutus";
+import { MyFavourites } from "./pages/myfavourites";
 import injectContext from "./store/appContext";
 
 const Layout = () => {
@@ -32,13 +32,13 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Signup />} path="/signup" />
-                        <Route element={<AgregarVehiculo />} path="/agregarvehiculo" />
-                        <Route element={<EditarVehiculo />} path="/editarvehiculo/:id" />
-                        <Route element={<MisCoches />} path="/miscoches" />
-                        <Route element={<Favoritos />} path="/favoritos" />
-                        <Route element={<Details />} path="/details/:id" />
+                        <Route element={<AddVehicle />} path="/addvehicle" />
+                        <Route element={<EditVehicle />} path="/editvehicle/:id" />
+                        <Route element={<MyVehicles />} path="/myvehicles" />
+                        <Route element={< MyFavourites  />} path="/myfavourites" />
+                        <Route element={<DetailVehicle />} path="/detailvehicle/:id" />
                         <Route element={<Payment />} path="/payment" />
-                        <Route element={<SobreNosotros />} path="/sobrenosotros" />
+                        <Route element={<AboutUs />} path="/aboutus" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

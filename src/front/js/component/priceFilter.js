@@ -1,6 +1,6 @@
 import React from "react";
 
-export const FiltroPrecio = (props) => {
+export const PriceFilter = (props) => {
 
     return (
         <div className="dropdown">

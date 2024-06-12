@@ -3,15 +3,15 @@ import { Link, useParams } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/index.css";
 
-export const Details = () => {
+export const DetailVehicle = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
 
     const handlePayment = () => {
-        if(store.diasTotales === null) {
+        if(store.totalDays === null) {
             swal("Debe seleccionar la cantidad de días antes de realizar el alquiler", "", "error")
         }
-        actions.totalpayment(store.details.vehicle_id, store.details.marca_modelo, store.details.precio, store.diasTotales, store.details.precio_id_stripe,store.details.url_img1);
+        actions.totalpayment(store.details.vehicle_id, store.details.marca_modelo, store.details.precio, store.totalDays, store.details.precio_id_stripe,store.details.url_img1);
 	};
 
     useEffect(() => {
@@ -75,11 +75,11 @@ export const Details = () => {
                             </div>
                             <div className="d-flex mb-4">
                                 <h5>
-                                    <strong>CANTIDAD DE DIAS:</strong> {store.diasTotales ? store.diasTotales : 0}
+                                    <strong>CANTIDAD DE DIAS:</strong> {store.totalDays ? store.totalDays : 0}
                                 </h5>
                             </div>
                         </div>
-                        <Link to={store.diasTotales === null ? '/' : '/payment'} >
+                        <Link to={store.totalDays === null ? '/' : '/payment'} >
                             <button onClick={handlePayment} type="button" className="botonAlquilar btn-success text-center btn-lg border-2 mt-4 fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Alquilar
                             </button>

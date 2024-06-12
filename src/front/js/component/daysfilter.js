@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import DatePicker from "react-datepicker";
 
-export const FiltroFecha = () => {
+export const DaysFilter = () => {
     const { store, actions } = useContext(Context);
-    const [dateRange, setDateRange] = useState([store.fechaInicio, store.fechaFin]);
+    const [dateRange, setDateRange] = useState([store.startDay, store.endDay]);
     const [startDate, endDate] = dateRange;    
   
 

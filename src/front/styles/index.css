@@ -1,14 +1,31 @@
+body {
+    min-height: 100vh; 
+}
+
 .navbar {
     background-color:  #050404d0;
     text-shadow: 2px 2px 5px rgba(247, 241, 241, 0.5);
 }
 
-.logo {
+.navbar-car-logo {
     width: 60px;
     margin-left: 20px;
 }
 
-.contactForm {
+.navbar-menu-button {
+    width: 25px;
+    height: 25px;
+}
+
+.user-icon-menu {
+    font-size: 2rem;
+}
+
+.offcanvas {
+    bottom: auto !important;
+}
+
+.login-signup-form {
     width: 360px;
     height: 440px;
     margin:auto;
@@ -20,7 +37,7 @@
     justify-content: center;
 }
 
-.agregar-vehiculo {
+.add-edit-vehicle-form {
     margin-left: 10vw;
     margin-right: 10vw;
     margin-top: 80px;
@@ -30,25 +47,29 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.border-bottom {
-    margin-top: 10px;
-    margin-bottom: 15px;
-    color: rgb(7, 65, 7);
-}
-
-.subtitulos { 
+.add-edit-form-subtitles { 
     margin-top: 15px;
     color: rgb(33, 103, 33);
     font-size: 1.3rem;
 }
 
-.btn-outline-light {
-    color: #198754;
-    border-color: #198754;
+#add-vehicle-button-form {
+    margin-top: 65px;
 }
 
-#btnAgregarForm {
-    margin-top: 65px;
+.card-vehicle {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    border-radius: 1.25rem;
+}
+
+.corazon:hover i {
+    color:black !important;
+}
+
+.card-vehicle-imagen1 {
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
 }
 
 .dropzone {
@@ -59,31 +80,16 @@
     color: #bdbdbd;
 }
 
-.upload-img-text {
-    color: rgb(7, 65, 7);
-} 
+.dropzone-logo {
+    width: 60px;
+    margin-left: 20px;
+}
 
-.imagenes-subidas {
-    display: flex; 
-    flex-direction: row;
-    justify-content: space-between; 
-    align-items: center;
-  }
-
-.container {
+.myfavourites-myvehicles {
     min-height: 100%;
     display: flex;
     flex-direction: column;
 } 
-
-footer {
-    background: #050404d0 !important;
-    height: 110px
-}
-
-.corazon:hover i {
-    color:black !important;
-}
 
 .imgCarousel {
     width: 75px !important;
@@ -91,27 +97,28 @@ footer {
     position: relative;
     justify-items: center;
 }
- 
-.offcanvas {
-    bottom: auto !important;
+
+#details-carousel {
+    z-index: 0;
 }
 
-body{
-    min-height: 100vh; 
+.about-us-map {
+    width:800;
+    height:450;
+    border:0;
+}
+    
+footer {
+    background: #050404d0 !important;
+    height: 110px
 }
 
 .footer-view {
     min-height: 100vh;
 }
 
-.mapa {
-    width:800;
-    height:450;
-    border:0;
-}
-
-.logo-footer {
-    width:50px;
+.footericons {
+    margin-right: 100px;
 }
 
 .instagram {
@@ -137,46 +144,11 @@ body{
 .twitter:hover {
     color:#0d6efd;
 }
-    
-.navbarbutton {
-    width: 25px;
-    height: 25px;
-}
-    
-.usericon {
-    font-size: 2rem;
-}
-
-.texto-favoritos {
-    font: 16px;
-}
-
-.iconos {
-    margin-right: 100px;
-}
 
 .chatbot {
     text-align: center;
     display: flex;
     justify-content: end;
-}
-.principal{
-    background-color: rgb(220, 221, 224);
-}
-
-.vehiculo {
-    padding-right: 0px !important;
-    padding-left: 0px !important;
-    border-radius: 1.25rem;
-}
-
-.imagen1 {
-    border-top-left-radius: 1.25rem;
-    border-top-right-radius: 1.25rem;
-}
-
-#details-carousel {
-    z-index: 0;
 }
 
 #product-display-img {
