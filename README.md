@@ -1,5 +1,5 @@
-# Final Project Friendly Wheels
-#### I created a car rental application made for the 4Geeks Academy Final Project.
+# Friendly Wheels
+#### I created a car rental application made for the 4Geeks Academy.
 The app allows registration, login, add/edit/delete rental cars, filter the list of rental cars by dates, price and/or seats, mark cars as favorites, view car details, make payment through a payment gateway, sending email with the rental receipt. In turn, it has a support Chatbot.
 
 ### Technology stack
